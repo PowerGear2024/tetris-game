@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enhanced Tetris Game</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
             margin: 0;
@@ -829,6 +830,13 @@
             gameRunning = false;
             clearInterval(gameInterval);
             
+            // Автоматически отправляем результат в Telegram
+            if (window.Telegram && window.Telegram.WebApp) {
+                setTimeout(() => {
+                    sendScore();
+                }, 1000); // Небольшая задержка для показа результата
+            }
+            
             document.getElementById('finalScore').textContent = score.toLocaleString();
             document.getElementById('finalLines').textContent = lines;
             document.getElementById('finalLevel').textContent = level;
@@ -1039,24 +1047,35 @@
             };
             
             if (window.Telegram && window.Telegram.WebApp) {
-                window.Telegram.WebApp.sendData(JSON.stringify(gameData));
-                window.Telegram.WebApp.close();
+                try {
+                    window.Telegram.WebApp.sendData(JSON.stringify(gameData));
+                    window.Telegram.WebApp.close();
+                } catch (e) {
+                    console.error('Telegram WebApp error:', e);
+                    alert(`Результат: ${score} очков, ${lines} линий, уровень ${level}, максимальное комбо ${maxCombo}`);
+                }
             } else {
+                // Fallback для тестирования вне Telegram
+                console.log('Game data:', gameData);
                 alert(`Результат: ${score} очков, ${lines} линий, уровень ${level}, максимальное комбо ${maxCombo}`);
             }
         }
         
-        // Initialize
+        // Initialize Telegram WebApp
         if (window.Telegram && window.Telegram.WebApp) {
             window.Telegram.WebApp.ready();
             window.Telegram.WebApp.expand();
+            console.log('Telegram WebApp initialized');
+        } else {
+            console.log('Running outside Telegram');
         }
         
-        // Check if mobile
-        if ('ontouchstart' in window) {
+        // Check if mobile for touch controls
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
             document.getElementById('touchControls').classList.add('show');
         }
         
+        // Initialize background effects and start game
         initStars();
         setInterval(createParticle, 2000);
         startNewGame();
