@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Tetris</title>
+    <title>Love Карина</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Dancing+Script:wght@400;700&family=Pacifico&display=swap');
         
         * {
             margin: 0;
@@ -15,1418 +15,942 @@
         }
 
         :root {
-            --primary: #ff0080;
-            --secondary: #00ff80;
-            --accent: #8000ff;
-            --neon-blue: #00d4ff;
-            --dark: #0a0a0f;
-            --darker: #050508;
-            --glass: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
+            --heart-red: #ff0040;
+            --heart-pink: #ff4081;
+            --heart-coral: #ff6b9d;
+            --gold: #ffd700;
+            --rose-gold: #e8b4a0;
+            --purple: #9c27b0;
+            --blue: #2196f3;
+            --cyan: #00bcd4;
         }
 
         body {
-            font-family: 'Orbitron', monospace;
+            font-family: 'Dancing Script', cursive;
             background: 
-                radial-gradient(circle at 20% 80%, rgba(255, 0, 128, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(128, 0, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-                linear-gradient(135deg, var(--dark) 0%, var(--darker) 50%, var(--dark) 100%);
-            background-size: 300% 300%;
-            animation: subtleBackgroundShift 30s ease infinite;
+                radial-gradient(circle at 15% 85%, rgba(255, 0, 64, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 85% 15%, rgba(156, 39, 176, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(255, 107, 157, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0, 188, 212, 0.2) 0%, transparent 50%),
+                linear-gradient(135deg, #0a0a0f 0%, #1a0a1a 25%, #0f0a1a 50%, #1a0a0f 75%, #0a0a0f 100%);
+            background-size: 600% 600%;
+            animation: magicBackground 25s ease infinite;
             color: white;
             overflow: hidden;
             height: 100vh;
             position: relative;
-            touch-action: none;
+            touch-action: manipulation;
         }
 
-        @keyframes subtleBackgroundShift {
+        @keyframes magicBackground {
             0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+            20% { background-position: 100% 0%; }
+            40% { background-position: 0% 100%; }
+            60% { background-position: 100% 50%; }
+            80% { background-position: 50% 0%; }
         }
 
-        .cyber-grid {
+        .aurora {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 212, 255, 0.15) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 212, 255, 0.15) 1px, transparent 1px);
-            background-size: 50px 50px;
+            background: 
+                linear-gradient(90deg, transparent, rgba(255, 0, 64, 0.1), transparent),
+                linear-gradient(45deg, transparent, rgba(156, 39, 176, 0.1), transparent);
+            animation: auroraWave 15s ease-in-out infinite;
             pointer-events: none;
             z-index: 1;
-            animation: gridGlow 4s ease-in-out infinite alternate;
         }
 
-        @keyframes gridGlow {
-            from { opacity: 0.6; }
-            to { opacity: 1; }
+        @keyframes auroraWave {
+            0%, 100% { transform: translateX(-100%) skewX(-5deg); }
+            50% { transform: translateX(100%) skewX(5deg); }
         }
 
-        .game-container {
+        .constellation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: stellarTwinkle 4s infinite ease-in-out;
+        }
+
+        .star::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, white, transparent);
+            transform: translate(-50%, -50%);
+        }
+
+        .star::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 1px;
+            height: 200%;
+            background: linear-gradient(0deg, transparent, white, transparent);
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes stellarTwinkle {
+            0%, 100% { 
+                opacity: 0.4; 
+                transform: scale(1) rotate(0deg);
+                box-shadow: 0 0 10px white;
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.5) rotate(90deg);
+                box-shadow: 0 0 20px white, 0 0 30px var(--gold);
+            }
+        }
+
+        .particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .heart-container {
             position: relative;
             z-index: 10;
             height: 100vh;
             display: flex;
-            padding: 8px;
-        }
-
-        .left-panel {
-            width: 70px;
-            display: flex;
             flex-direction: column;
-            gap: 6px;
-            margin-right: 6px;
-        }
-
-        .right-panel {
-            width: 70px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            margin-left: 6px;
-        }
-
-        .info-panel {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 15px;
-            padding: 10px;
-            text-align: center;
-            box-shadow: 
-                0 8px 25px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .info-panel::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
-            opacity: 0.7;
-        }
-
-        .info-panel:hover {
-            transform: translateY(-2px);
-            box-shadow: 
-                0 12px 35px rgba(0, 255, 255, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            border-color: var(--neon-blue);
-        }
-
-        .panel-title {
-            font-size: 0.7rem;
-            color: var(--secondary);
-            font-weight: 700;
-            margin-bottom: 6px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .panel-value {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: white;
-            text-shadow: 0 0 8px var(--primary);
-        }
-
-        .panel-sub {
-            font-size: 0.6rem;
-            color: var(--neon-blue);
-            margin-top: 2px;
-        }
-
-        .preview-canvas {
-            border-radius: 8px;
-            background: 
-                radial-gradient(circle at 30% 30%, rgba(0, 50, 100, 0.4) 0%, rgba(0, 0, 0, 0.8) 100%),
-                linear-gradient(135deg, rgba(0, 20, 40, 0.6) 0%, rgba(0, 0, 0, 0.9) 100%);
-            border: 1px solid var(--glass-border);
-            margin: 0 auto;
-            width: 50px;
-            height: 35px;
-            box-shadow: 
-                inset 0 0 15px rgba(0, 0, 0, 0.7),
-                0 0 8px rgba(0, 212, 255, 0.2);
-        }
-
-        .main-game {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px 0;
-        }
-
-        .score-bar {
-            width: 100%;
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            border-radius: 15px;
-            padding: 10px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            margin-bottom: 10px;
-        }
-
-        .score-item {
-            text-align: center;
-            flex: 1;
-        }
-
-        .score-value {
-            font-size: 1.3rem;
-            font-weight: 900;
-            color: white;
-            text-shadow: 0 0 10px var(--primary);
-        }
-
-        .score-label {
-            font-size: 0.7rem;
-            color: var(--neon-blue);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 2px;
-        }
-
-        .level-progress {
-            width: 100%;
-            height: 4px;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 2px;
-            overflow: hidden;
-            margin-top: 4px;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--secondary), var(--neon-blue));
-            border-radius: 2px;
-            transition: width 0.3s ease;
-        }
-
-        .canvas-container {
-            position: relative;
-            background: 
-                linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%),
-                var(--glass);
-            backdrop-filter: blur(20px);
-            border-radius: 25px;
-            padding: 15px;
-            border: 2px solid var(--glass-border);
-            box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.5),
-                inset 0 2px 0 rgba(255, 255, 255, 0.2),
-                0 0 0 1px rgba(0, 212, 255, 0.3);
-            margin: 8px 0;
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-
-        .canvas-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
-            animation: containerShimmer 5s infinite;
-        }
-
-        @keyframes containerShimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .canvas-container:hover {
-            transform: translateY(-3px);
-            box-shadow: 
-                0 20px 45px rgba(0, 0, 0, 0.6),
-                inset 0 2px 0 rgba(255, 255, 255, 0.3),
-                0 0 30px rgba(0, 212, 255, 0.4);
-        }
-
-        .tetris-canvas {
-            border-radius: 15px;
-            box-shadow: 
-                0 0 30px var(--neon-blue),
-                inset 0 0 30px rgba(0, 0, 0, 0.8),
-                inset 0 0 0 1px rgba(0, 212, 255, 0.3);
-            background: 
-                radial-gradient(circle at 50% 50%, rgba(0, 50, 100, 0.3) 0%, rgba(0, 0, 0, 0.9) 100%),
-                linear-gradient(135deg, rgba(0, 20, 40, 0.8) 0%, rgba(0, 0, 0, 0.95) 100%);
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: all 0.3s ease;
-        }
-
-        .tetris-canvas.line-clear {
-            animation: enhancedLineClear 0.8s ease-out;
-        }
-
-        @keyframes enhancedLineClear {
-            0%, 100% { 
-                box-shadow: 0 0 30px var(--neon-blue);
-                filter: brightness(1);
-            }
-            25% { 
-                box-shadow: 
-                    0 0 50px var(--primary), 
-                    0 0 80px var(--secondary),
-                    inset 0 0 20px rgba(255, 0, 128, 0.4);
-                filter: brightness(1.5) saturate(1.5);
-            }
-            50% {
-                box-shadow: 
-                    0 0 60px var(--secondary), 
-                    0 0 100px var(--neon-blue),
-                    inset 0 0 30px rgba(0, 255, 128, 0.4);
-                filter: brightness(1.8) saturate(2);
-            }
-            75% {
-                box-shadow: 
-                    0 0 40px var(--accent),
-                    inset 0 0 25px rgba(128, 0, 255, 0.4);
-                filter: brightness(1.3) saturate(1.5);
-            }
-        }
-
-        .gesture-hint {
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 6px 12px;
-            font-size: 0.7rem;
-            color: var(--neon-blue);
-            text-align: center;
-            margin-top: 6px;
-        }
-
-        .combo-explosion {
-            position: absolute;
-            top: 30%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--primary);
-            text-shadow: 0 0 20px var(--primary);
-            opacity: 0;
-            pointer-events: none;
-            z-index: 50;
-        }
-
-        .combo-explosion.show {
-            animation: comboBlast 1.5s ease-out;
-        }
-
-        @keyframes comboBlast {
-            0% { 
-                opacity: 0; 
-                transform: translateX(-50%) translateY(20px) scale(0.5);
-            }
-            20% { 
-                opacity: 1; 
-                transform: translateX(-50%) translateY(0) scale(1.1);
-            }
-            80% { 
-                opacity: 1; 
-                transform: translateX(-50%) translateY(-10px) scale(1);
-            }
-            100% { 
-                opacity: 0; 
-                transform: translateX(-50%) translateY(-20px) scale(0.8);
-            }
-        }
-
-        .game-over-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px);
-            display: none;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            padding: 20px;
         }
 
-        .modal-content {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 2px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 25px 20px;
+        .text-container {
+            position: relative;
+            margin-bottom: 60px;
             text-align: center;
-            max-width: 90%;
-            width: 350px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
 
-        .modal-title {
-            font-size: 2.5rem;
-            font-weight: 900;
-            margin-bottom: 20px;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
+        .love-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 5rem;
+            font-weight: 400;
+            background: linear-gradient(45deg, var(--heart-red), var(--heart-pink), var(--gold), var(--heart-coral));
+            background-size: 400% 400%;
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
+            animation: textShimmer 4s ease infinite;
+            text-shadow: 0 0 30px rgba(255, 0, 64, 0.5);
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(50px) scale(0.8);
+            animation: textAppear 3s ease 1s forwards, textShimmer 4s ease 4s infinite;
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin: 20px 0;
+        .name-text {
+            font-family: 'Pacifico', cursive;
+            font-size: 4rem;
+            background: linear-gradient(45deg, var(--gold), var(--rose-gold), var(--heart-pink), var(--purple));
+            background-size: 400% 400%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: nameShimmer 3s ease infinite;
+            text-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+            opacity: 0;
+            transform: translateY(30px) scale(0.9);
+            animation: nameAppear 3s ease 2s forwards, nameShimmer 3s ease 5s infinite;
         }
 
-        .stat-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 10px;
-            border: 1px solid var(--glass-border);
+        @keyframes textAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
-        .modal-buttons {
+        @keyframes nameAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes textShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes nameShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .main-heart {
+            position: relative;
             display: flex;
-            gap: 15px;
             justify-content: center;
-            margin-top: 20px;
+            align-items: center;
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: scale(0.3);
+            animation: heartAppear 2s ease 0.5s forwards;
         }
 
-        .btn {
-            background: linear-gradient(145deg, var(--glass), rgba(255, 255, 255, 0.05));
-            border: 2px solid var(--glass-border);
-            border-radius: 10px;
-            color: white;
-            font-family: 'Orbitron', monospace;
-            font-weight: 700;
-            font-size: 0.9rem;
-            padding: 10px 18px;
+        @keyframes heartAppear {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .heart-3d {
+            position: relative;
+            width: 280px;
+            height: 250px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            user-select: none;
-            touch-action: manipulation;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: heartFloat 4s ease-in-out infinite;
+            transform-style: preserve-3d;
         }
 
-        .btn:active {
+        @keyframes heartFloat {
+            0%, 100% { 
+                transform: translateY(0) rotateY(0deg) scale(1);
+                filter: drop-shadow(0 20px 40px rgba(255, 0, 64, 0.4));
+            }
+            25% { 
+                transform: translateY(-15px) rotateY(5deg) scale(1.05);
+                filter: drop-shadow(0 30px 60px rgba(255, 107, 157, 0.6));
+            }
+            50% { 
+                transform: translateY(-20px) rotateY(0deg) scale(1.1);
+                filter: drop-shadow(0 40px 80px rgba(255, 0, 64, 0.8));
+            }
+            75% { 
+                transform: translateY(-15px) rotateY(-5deg) scale(1.05);
+                filter: drop-shadow(0 30px 60px rgba(255, 107, 157, 0.6));
+            }
+        }
+
+        .heart-3d:hover {
+            transform: scale(1.15) rotateY(10deg);
+            filter: brightness(1.3) drop-shadow(0 50px 100px rgba(255, 0, 64, 0.8));
+        }
+
+        .heart-3d:active {
             transform: scale(0.95);
-            background: linear-gradient(145deg, var(--primary), var(--accent));
-            border-color: var(--primary);
         }
 
-        /* Ландшафтная ориентация */
-        @media (orientation: landscape) and (max-height: 600px) {
-            .left-panel, .right-panel {
-                width: 60px;
-            }
-            
-            .score-bar {
-                padding: 6px 10px;
-            }
-            
-            .score-value {
-                font-size: 1.1rem;
-            }
-            
-            .panel-value {
-                font-size: 0.9rem;
-            }
-            
-            .preview-canvas {
-                width: 40px;
-                height: 28px;
-            }
+        .heart-shape {
+            position: relative;
+            width: 280px;
+            height: 250px;
         }
 
-        /* Маленькие экраны */
-        @media (max-width: 350px) {
-            .left-panel, .right-panel {
-                width: 60px;
-            }
-            
-            .score-value {
-                font-size: 1rem;
-            }
-            
-            .panel-value {
-                font-size: 0.9rem;
-            }
-            
-            .preview-canvas {
-                width: 45px;
-                height: 32px;
-            }
-            
-            .info-panel {
-                padding: 6px;
-            }
-            
-            .panel-title {
-                font-size: 0.6rem;
-            }
+        .heart-shape::before,
+        .heart-shape::after {
+            content: '';
+            position: absolute;
+            left: 140px;
+            top: 0;
+            width: 140px;
+            height: 200px;
+            background: linear-gradient(135deg, 
+                var(--heart-red) 0%, 
+                var(--heart-pink) 25%, 
+                var(--heart-coral) 50%, 
+                var(--heart-pink) 75%, 
+                var(--heart-red) 100%);
+            border-radius: 140px 140px 0 0;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+            box-shadow: 
+                inset 0 0 50px rgba(255, 255, 255, 0.3),
+                inset 20px 20px 60px rgba(255, 255, 255, 0.2),
+                inset -20px -20px 60px rgba(0, 0, 0, 0.3),
+                0 0 60px rgba(255, 0, 64, 0.8),
+                0 0 120px rgba(255, 107, 157, 0.4);
+            animation: heartPulse 3s ease-in-out infinite;
         }
 
-        /* Очень маленькие экраны */
-        @media (max-width: 320px) {
-            .game-container {
-                padding: 4px;
+        .heart-shape::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+            animation: heartPulse 3s ease-in-out infinite 0.1s;
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { 
+                box-shadow: 
+                    inset 0 0 50px rgba(255, 255, 255, 0.3),
+                    inset 20px 20px 60px rgba(255, 255, 255, 0.2),
+                    inset -20px -20px 60px rgba(0, 0, 0, 0.3),
+                    0 0 60px rgba(255, 0, 64, 0.8),
+                    0 0 120px rgba(255, 107, 157, 0.4);
             }
-            
-            .left-panel, .right-panel {
-                width: 55px;
-                gap: 4px;
-            }
-            
-            .canvas-container {
-                padding: 8px;
+            50% { 
+                box-shadow: 
+                    inset 0 0 50px rgba(255, 255, 255, 0.5),
+                    inset 20px 20px 60px rgba(255, 255, 255, 0.4),
+                    inset -20px -20px 60px rgba(0, 0, 0, 0.2),
+                    0 0 100px rgba(255, 0, 64, 1),
+                    0 0 200px rgba(255, 107, 157, 0.8),
+                    0 0 300px rgba(255, 215, 0, 0.3);
             }
         }
 
-        .glow-effect {
-            animation: glowPulse 2s ease-in-out infinite alternate;
+        .heart-aura {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, 
+                rgba(255, 0, 64, 0.3) 0%, 
+                rgba(255, 107, 157, 0.2) 30%, 
+                rgba(255, 215, 0, 0.1) 60%, 
+                transparent 100%);
+            border-radius: 50%;
+            animation: auraRotate 20s linear infinite;
         }
 
-        @keyframes glowPulse {
-            from { 
-                text-shadow: 0 0 10px var(--primary);
+        @keyframes auraRotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+            50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.2); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
+        }
+
+        .magic-circles {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+        }
+
+        .magic-circle {
+            position: absolute;
+            border: 2px solid rgba(255, 215, 0, 0.6);
+            border-radius: 50%;
+            animation: circleOrbit linear infinite;
+        }
+
+        .magic-circle:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: circleOrbit 15s linear infinite;
+        }
+
+        .magic-circle:nth-child(2) {
+            width: 300px;
+            height: 300px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: circleOrbit 20s linear infinite reverse;
+            border-color: rgba(255, 107, 157, 0.5);
+        }
+
+        .magic-circle:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: circleOrbit 25s linear infinite;
+            border-color: rgba(156, 39, 176, 0.4);
+        }
+
+        @keyframes circleOrbit {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .sparkle-burst {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            pointer-events: none;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: sparkleFloat 6s linear infinite;
+        }
+
+        .sparkle::before {
+            content: '✨';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            animation: sparkleRotate 2s linear infinite;
+        }
+
+        @keyframes sparkleFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(100px) translateX(0) scale(0) rotate(0deg);
             }
-            to { 
-                text-shadow: 0 0 15px var(--primary);
+            20% {
+                opacity: 1;
+                transform: translateY(80px) translateX(20px) scale(1) rotate(90deg);
+            }
+            80% {
+                opacity: 1;
+                transform: translateY(-80px) translateX(-20px) scale(1) rotate(270deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) translateX(0) scale(0) rotate(360deg);
+            }
+        }
+
+        @keyframes sparkleRotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .love-counter {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.15) 0%, 
+                rgba(255, 255, 255, 0.05) 100%);
+            backdrop-filter: blur(30px);
+            border: 2px solid rgba(255, 0, 64, 0.3);
+            border-radius: 30px;
+            padding: 20px 30px;
+            text-align: center;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transform: translateX(-50%) translateY(50px);
+            animation: counterAppear 2s ease 3.5s forwards;
+        }
+
+        @keyframes counterAppear {
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .counter-label {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem;
+            color: var(--gold);
+            text-shadow: 0 0 15px var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .counter-value {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--heart-red), var(--gold), var(--heart-pink));
+            background-size: 200% 200%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: counterGlow 3s ease infinite;
+        }
+
+        @keyframes counterGlow {
+            0%, 100% { 
+                background-position: 0% 50%;
+                text-shadow: 0 0 20px rgba(255, 0, 64, 0.5);
+            }
+            50% { 
+                background-position: 100% 50%;
+                text-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+            }
+        }
+
+        .interaction-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem;
+            color: var(--rose-gold);
+            text-shadow: 0 0 20px var(--rose-gold);
+            animation: hintPulse 3s ease-in-out infinite;
+            opacity: 0;
+            animation: hintAppear 2s ease 4s forwards, hintPulse 3s ease 6s infinite;
+        }
+
+        @keyframes hintAppear {
+            to { opacity: 1; }
+        }
+
+        @keyframes hintPulse {
+            0%, 100% { 
+                opacity: 0.7; 
+                transform: translateX(-50%) scale(1);
+            }
+            50% { 
+                opacity: 1; 
+                transform: translateX(-50%) scale(1.05);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .heart-3d {
+                width: 220px;
+                height: 195px;
+            }
+
+            .heart-shape {
+                width: 220px;
+                height: 195px;
+            }
+
+            .heart-shape::before,
+            .heart-shape::after {
+                left: 110px;
+                width: 110px;
+                height: 156px;
+            }
+
+            .heart-shape::after {
+                left: 0;
+            }
+
+            .love-text {
+                font-size: 4rem;
+            }
+
+            .name-text {
+                font-size: 3rem;
+            }
+
+            .magic-circles {
+                width: 400px;
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .heart-3d {
+                width: 180px;
+                height: 160px;
+            }
+
+            .heart-shape {
+                width: 180px;
+                height: 160px;
+            }
+
+            .heart-shape::before,
+            .heart-shape::after {
+                left: 90px;
+                width: 90px;
+                height: 128px;
+            }
+
+            .heart-shape::after {
+                left: 0;
+            }
+
+            .love-text {
+                font-size: 3rem;
+            }
+
+            .name-text {
+                font-size: 2.5rem;
+            }
+
+            .magic-circles {
+                width: 300px;
+                height: 300px;
+            }
+
+            .heart-aura {
+                width: 300px;
+                height: 300px;
+            }
+        }
+
+        .explosion-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .explosion-effect.active {
+            animation: explosionEffect 2s ease-out;
+        }
+
+        @keyframes explosionEffect {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0.3);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translate(-50%, -50%) scale(1.5);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(3);
+            }
+        }
+
+        .explosion-heart {
+            position: absolute;
+            font-size: 30px;
+            animation: explosionHeartFly 2s ease-out forwards;
+        }
+
+        @keyframes explosionHeartFly {
+            0% {
+                opacity: 1;
+                transform: scale(0.5) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(2) rotate(720deg) translate(var(--dx), var(--dy));
             }
         }
     </style>
 </head>
 <body>
-    <div class="cyber-grid"></div>
+    <div class="aurora"></div>
+    <div class="constellation" id="constellation"></div>
+    <canvas class="particle-canvas" id="particleCanvas"></canvas>
     
-    <div class="combo-explosion" id="comboExplosion"></div>
-    
-    <div class="game-container">
-        <div class="left-panel">
-            <div class="info-panel">
-                <div class="panel-title">NEXT</div>
-                <canvas id="next" class="preview-canvas" width="50" height="35"></canvas>
-            </div>
-            
-            <div class="info-panel">
-                <div class="panel-title">HOLD</div>
-                <canvas id="hold" class="preview-canvas" width="50" height="35"></canvas>
-            </div>
-            
-            <div class="info-panel">
-                <div class="panel-title">LINES</div>
-                <div class="panel-value" id="lines">0</div>
-            </div>
-            
-            <div class="info-panel">
-                <div class="panel-title">SPEED</div>
-                <div class="panel-value" id="speed">10</div>
-            </div>
+    <div class="heart-container">
+        <div class="text-container">
+            <div class="love-text">Love</div>
+            <div class="name-text">Карина</div>
         </div>
         
-        <div class="main-game">
-            <div class="score-bar">
-                <div class="score-item">
-                    <div class="score-value glow-effect" id="score">0</div>
-                    <div class="score-label">SCORE</div>
-                </div>
-                <div class="score-item">
-                    <div class="score-value" id="level">1</div>
-                    <div class="score-label">LEVEL</div>
-                    <div class="level-progress">
-                        <div class="progress-bar" id="levelProgress"></div>
-                    </div>
-                </div>
-                <div class="score-item">
-                    <div class="score-value" id="time">00:00</div>
-                    <div class="score-label">TIME</div>
-                </div>
+        <div class="main-heart">
+            <div class="heart-aura"></div>
+            
+            <div class="magic-circles">
+                <div class="magic-circle"></div>
+                <div class="magic-circle"></div>
+                <div class="magic-circle"></div>
             </div>
             
-            <div class="canvas-container">
-                <canvas id="tetris" class="tetris-canvas" width="300" height="600"></canvas>
+            <div class="sparkle-burst" id="sparkleBurst"></div>
+            
+            <div class="heart-3d" id="mainHeart">
+                <div class="heart-shape"></div>
             </div>
             
-            <div class="gesture-hint">
-                ВЕДИТЕ пальцем для движения | ТАП: поворот | ВВЕРХ: hold
-            </div>
+            <div class="explosion-effect" id="explosionEffect"></div>
         </div>
         
-        <div class="right-panel">
-            <div class="info-panel">
-                <div class="panel-title">COMBO</div>
-                <div class="panel-value" id="combo">0</div>
-                <div class="panel-sub">Max: <span id="maxCombo">0</span></div>
-            </div>
-            
-            <div class="info-panel">
-                <div class="panel-title">PPS</div>
-                <div class="panel-value" id="pps">0.0</div>
-                <div class="panel-sub"><span id="pieces">0</span> pcs</div>
-            </div>
-            
-            <div class="info-panel">
-                <div class="panel-title">BONUS</div>
-                <div class="panel-value" id="bonus">x1</div>
-                <div class="panel-sub">multiplier</div>
-            </div>
-            
-            <div class="info-panel">
-                <div class="panel-title">CLEAR</div>
-                <div class="panel-value" id="clearType">-</div>
-                <div class="panel-sub">last</div>
-            </div>
+        <div class="love-counter">
+            <div class="counter-label">💖 Hearts of Love 💖</div>
+            <div class="counter-value" id="loveCounter">0</div>
         </div>
-    </div>
-    
-    <div class="game-over-modal" id="gameOverModal">
-        <div class="modal-content">
-            <h2 class="modal-title">GAME OVER</h2>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="score-label">SCORE</div>
-                    <div class="score-value" id="finalScore">0</div>
-                </div>
-                <div class="stat-item">
-                    <div class="score-label">LINES</div>
-                    <div class="score-value" id="finalLines">0</div>
-                </div>
-                <div class="stat-item">
-                    <div class="score-label">LEVEL</div>
-                    <div class="score-value" id="finalLevel">1</div>
-                </div>
-                <div class="stat-item">
-                    <div class="score-label">TIME</div>
-                    <div class="score-value" id="finalTime">00:00</div>
-                </div>
-                <div class="stat-item">
-                    <div class="score-label">COMBO</div>
-                    <div class="score-value" id="finalMaxCombo">0</div>
-                </div>
-                <div class="stat-item">
-                    <div class="score-label">PPS</div>
-                    <div class="score-value" id="finalPPS">0.0</div>
-                </div>
-            </div>
-            <div class="modal-buttons">
-                <button class="btn" onclick="startNewGame()">NEW GAME</button>
-                <button class="btn" onclick="sendScore()">SUBMIT</button>
-            </div>
-        </div>
+        
+        <div class="interaction-hint">✨ Touch the heart for magic ✨</div>
     </div>
 
     <script>
-        const canvas = document.getElementById('tetris');
+        let loveCount = 0;
+        let particles = [];
+        let animationId;
+        
+        const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
-        const nextCanvas = document.getElementById('next');
-        const nextCtx = nextCanvas.getContext('2d');
-        const holdCanvas = document.getElementById('hold');
-        const holdCtx = holdCanvas.getContext('2d');
-        
-        const BOARD_WIDTH = 12;
-        const BOARD_HEIGHT = 24;
-        const BLOCK_SIZE = 25;
-        
-        let board = [];
-        let currentPiece = null;
-        let nextPiece = null;
-        let heldPiece = null;
-        let canHold = true;
-        let score = 0;
-        let lines = 0;
-        let level = 1;
-        let combo = 0;
-        let maxCombo = 0;
-        let pieces = 0;
-        let gameRunning = false;
-        let isPaused = false;
-        let startTime = Date.now();
-        let gameInterval = null;
-        let lastClearType = '-';
-        let bonusMultiplier = 1;
-        
-        // Optimized touch controls
-        let isMovingLeft = false;
-        let isMovingRight = false;
-        let isMovingDown = false;
-        let moveInterval = null;
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let lastMoveTime = 0;
-        let lastUpdateTime = 0;
-        
-        // Cached DOM elements
-        const scoreEl = document.getElementById('score');
-        const linesEl = document.getElementById('lines');
-        const levelEl = document.getElementById('level');
-        const comboEl = document.getElementById('combo');
-        const maxComboEl = document.getElementById('maxCombo');
-        const piecesEl = document.getElementById('pieces');
-        const speedEl = document.getElementById('speed');
-        const bonusEl = document.getElementById('bonus');
-        const clearTypeEl = document.getElementById('clearType');
-        const timeEl = document.getElementById('time');
-        const ppsEl = document.getElementById('pps');
-        const levelProgressEl = document.getElementById('levelProgress');
-        const comboExplosionEl = document.getElementById('comboExplosion');
-        
-        const pieceTypes = [
-            { shape: [[1,1,1,1]], color: '#ff0080', name: 'I' },
-            { shape: [[1,1],[1,1]], color: '#00ff80', name: 'O' },
-            { shape: [[0,1,0],[1,1,1]], color: '#8000ff', name: 'T' },
-            { shape: [[0,1,1],[1,1,0]], color: '#00d4ff', name: 'S' },
-            { shape: [[1,1,0],[0,1,1]], color: '#ff4000', name: 'Z' },
-            { shape: [[1,0,0],[1,1,1]], color: '#b400ff', name: 'J' },
-            { shape: [[0,0,1],[1,1,1]], color: '#ffff00', name: 'L' }
-        ];
-        
-        function initBoard() {
-            board = Array(BOARD_HEIGHT).fill().map(() => Array(BOARD_WIDTH).fill(0));
-        }
-        
-        function getRandomPiece() {
-            const piece = pieceTypes[Math.floor(Math.random() * pieceTypes.length)];
-            return {
-                shape: piece.shape.map(row => [...row]),
-                color: piece.color,
-                name: piece.name,
-                x: Math.floor((BOARD_WIDTH - piece.shape[0].length) / 2),
-                y: 0
-            };
-        }
-        
-        function drawBlock(ctx, x, y, color, size = BLOCK_SIZE) {
-            // Enhanced 3D block with gradients and glow
-            ctx.save();
-            
-            // Outer glow
-            ctx.shadowColor = color;
-            ctx.shadowBlur = 8;
-            ctx.shadowOffsetX = 0;
-            ctx.shadowOffsetY = 0;
-            
-            // Main block with radial gradient
-            const gradient = ctx.createRadialGradient(
-                x * size + size * 0.3, y * size + size * 0.3, 0,
-                x * size + size * 0.5, y * size + size * 0.5, size * 0.7
-            );
-            gradient.addColorStop(0, color);
-            gradient.addColorStop(0.6, color);
-            gradient.addColorStop(1, '#000');
-            
-            ctx.fillStyle = gradient;
-            ctx.fillRect(x * size, y * size, size, size);
-            
-            // Top highlight
-            ctx.shadowBlur = 0;
-            const highlightGradient = ctx.createLinearGradient(
-                x * size, y * size,
-                x * size + size, y * size + size * 0.4
-            );
-            highlightGradient.addColorStop(0, 'rgba(255, 255, 255, 0.6)');
-            highlightGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-            
-            ctx.fillStyle = highlightGradient;
-            ctx.fillRect(x * size + 1, y * size + 1, size - 2, size * 0.3);
-            
-            // Inner border for 3D effect
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
-            ctx.lineWidth = 1;
-            ctx.strokeRect(x * size + 1, y * size + 1, size - 2, size - 2);
-            
-            // Outer border with color
-            ctx.strokeStyle = color;
-            ctx.lineWidth = 1.5;
-            ctx.strokeRect(x * size, y * size, size, size);
-            
-            ctx.restore();
-        }
-        
-        function drawBoard() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Enhanced grid with subtle glow
-            ctx.save();
-            ctx.strokeStyle = 'rgba(0, 212, 255, 0.2)';
-            ctx.lineWidth = 0.5;
-            ctx.shadowColor = '#00d4ff';
-            ctx.shadowBlur = 2;
-            
-            for (let x = 0; x <= BOARD_WIDTH; x++) {
-                ctx.beginPath();
-                ctx.moveTo(x * BLOCK_SIZE, 0);
-                ctx.lineTo(x * BLOCK_SIZE, canvas.height);
-                ctx.stroke();
-            }
-            for (let y = 0; y <= BOARD_HEIGHT; y++) {
-                ctx.beginPath();
-                ctx.moveTo(0, y * BLOCK_SIZE);
-                ctx.lineTo(canvas.width, y * BLOCK_SIZE);
-                ctx.stroke();
-            }
-            
-            ctx.restore();
-            
-            // Draw placed blocks
-            for (let y = 0; y < BOARD_HEIGHT; y++) {
-                for (let x = 0; x < BOARD_WIDTH; x++) {
-                    if (board[y][x]) {
-                        drawBlock(ctx, x, y, board[y][x]);
-                    }
-                }
-            }
-        }
-        
-        function drawPiece(piece) {
-            if (!piece) return;
-            for (let y = 0; y < piece.shape.length; y++) {
-                for (let x = 0; x < piece.shape[y].length; x++) {
-                    if (piece.shape[y][x]) {
-                        drawBlock(ctx, piece.x + x, piece.y + y, piece.color);
-                    }
-                }
-            }
-        }
-        
-        function drawGhostPiece() {
-            if (!currentPiece) return;
-            
-            const ghostPiece = { ...currentPiece };
-            while (canMove(ghostPiece, 0, 1)) {
-                ghostPiece.y++;
-            }
-            
-            ctx.save();
-            ctx.globalAlpha = 0.4;
-            ctx.strokeStyle = ghostPiece.color;
-            ctx.lineWidth = 2;
-            ctx.setLineDash([4, 4]);
-            ctx.shadowColor = ghostPiece.color;
-            ctx.shadowBlur = 8;
-            
-            for (let y = 0; y < ghostPiece.shape.length; y++) {
-                for (let x = 0; x < ghostPiece.shape[y].length; x++) {
-                    if (ghostPiece.shape[y][x]) {
-                        // Draw dashed outline with glow
-                        ctx.strokeRect(
-                            (ghostPiece.x + x) * BLOCK_SIZE + 2,
-                            (ghostPiece.y + y) * BLOCK_SIZE + 2,
-                            BLOCK_SIZE - 4,
-                            BLOCK_SIZE - 4
-                        );
-                        
-                        // Add subtle fill
-                        ctx.fillStyle = ghostPiece.color;
-                        ctx.globalAlpha = 0.1;
-                        ctx.fillRect(
-                            (ghostPiece.x + x) * BLOCK_SIZE + 3,
-                            (ghostPiece.y + y) * BLOCK_SIZE + 3,
-                            BLOCK_SIZE - 6,
-                            BLOCK_SIZE - 6
-                        );
-                        ctx.globalAlpha = 0.4;
-                    }
-                }
-            }
-            ctx.restore();
-        }
-        
-        function drawSmallPiece(piece, ctx, canvas) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            if (piece) {
-                const blockSize = 8; // Slightly smaller for the reduced canvas
-                const offsetX = (canvas.width - piece.shape[0].length * blockSize) / 2;
-                const offsetY = (canvas.height - piece.shape.length * blockSize) / 2;
-                
-                for (let y = 0; y < piece.shape.length; y++) {
-                    for (let x = 0; x < piece.shape[y].length; x++) {
-                        if (piece.shape[y][x]) {
-                            const px = offsetX + x * blockSize;
-                            const py = offsetY + y * blockSize;
-                            
-                            // Small glow effect
-                            ctx.save();
-                            ctx.shadowColor = piece.color;
-                            ctx.shadowBlur = 4;
-                            
-                            // Gradient for small blocks
-                            const gradient = ctx.createRadialGradient(
-                                px + blockSize * 0.3, py + blockSize * 0.3, 0,
-                                px + blockSize * 0.5, py + blockSize * 0.5, blockSize * 0.7
-                            );
-                            gradient.addColorStop(0, piece.color);
-                            gradient.addColorStop(0.7, piece.color);
-                            gradient.addColorStop(1, '#000');
-                            
-                            ctx.fillStyle = gradient;
-                            ctx.fillRect(px, py, blockSize, blockSize);
-                            
-                            // Highlight
-                            ctx.shadowBlur = 0;
-                            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-                            ctx.fillRect(px + 1, py + 1, blockSize * 0.4, blockSize * 0.3);
-                            
-                            // Border
-                            ctx.strokeStyle = piece.color;
-                            ctx.lineWidth = 0.8;
-                            ctx.strokeRect(px, py, blockSize, blockSize);
-                            
-                            ctx.restore();
-                        }
-                    }
-                }
-            }
-        }
-        
-        function canMove(piece, dx, dy) {
-            for (let y = 0; y < piece.shape.length; y++) {
-                for (let x = 0; x < piece.shape[y].length; x++) {
-                    if (piece.shape[y][x]) {
-                        const newX = piece.x + x + dx;
-                        const newY = piece.y + y + dy;
-                        
-                        if (newX < 0 || newX >= BOARD_WIDTH || 
-                            newY >= BOARD_HEIGHT || 
-                            (newY >= 0 && board[newY][newX])) {
-                            return false;
-                        }
-                    }
-                }
-            }
-            return true;
-        }
-        
-        function placePiece() {
-            for (let y = 0; y < currentPiece.shape.length; y++) {
-                for (let x = 0; x < currentPiece.shape[y].length; x++) {
-                    if (currentPiece.shape[y][x]) {
-                        const boardY = currentPiece.y + y;
-                        const boardX = currentPiece.x + x;
-                        if (boardY >= 0) {
-                            board[boardY][boardX] = currentPiece.color;
-                        }
-                    }
-                }
-            }
-            
-            clearLines();
-            spawnNewPiece();
-            canHold = true;
-            pieces++;
-        }
-        
-        function clearLines() {
-            let linesCleared = 0;
-            let clearedRows = [];
-            
-            for (let y = BOARD_HEIGHT - 1; y >= 0; y--) {
-                if (board[y].every(cell => cell !== 0)) {
-                    clearedRows.push(y);
-                    linesCleared++;
-                }
-            }
-            
-            if (linesCleared > 0) {
-                // Enhanced flash effect
-                canvas.classList.add('line-clear');
-                setTimeout(() => canvas.classList.remove('line-clear'), 800);
-                
-                // Simple particle effect for tetris
-                if (linesCleared === 4) {
-                    createSimpleParticles();
-                }
-                
-                // Remove lines
-                clearedRows.forEach(row => {
-                    board.splice(row, 1);
-                    board.unshift(Array(BOARD_WIDTH).fill(0));
-                });
-                
-                lines += linesCleared;
-                combo++;
-                maxCombo = Math.max(maxCombo, combo);
-                
-                // Scoring
-                const clearTypes = ['', 'SINGLE', 'DOUBLE', 'TRIPLE', 'TETRIS'];
-                lastClearType = clearTypes[linesCleared] || 'MULTI';
-                
-                const baseScore = [0, 100, 300, 500, 800][linesCleared] || 800;
-                bonusMultiplier = 1 + (combo * 0.2) + (linesCleared === 4 ? 0.5 : 0);
-                score += Math.floor(baseScore * level * bonusMultiplier);
-                
-                level = Math.floor(lines / 10) + 1;
-                
-                if (combo > 1) {
-                    showComboExplosion(combo);
-                }
-                
-                updateDisplay();
-            } else {
-                combo = 0;
-                bonusMultiplier = 1;
-                lastClearType = '-';
-            }
-        }
-        
-        function createSimpleParticles() {
-            // Very lightweight particle effect - only for TETRIS
-            const container = document.querySelector('.canvas-container');
-            const particle = document.createElement('div');
-            particle.style.position = 'absolute';
-            particle.style.top = '50%';
-            particle.style.left = '50%';
-            particle.style.width = '4px';
-            particle.style.height = '4px';
-            particle.style.background = '#ffff00';
-            particle.style.borderRadius = '50%';
-            particle.style.pointerEvents = 'none';
-            particle.style.zIndex = '20';
-            particle.style.boxShadow = '0 0 10px #ffff00';
-            particle.style.animation = 'simpleParticle 1s ease-out forwards';
-            
-            // Add keyframes if not exists
-            if (!document.querySelector('#particleKeyframes')) {
-                const style = document.createElement('style');
-                style.id = 'particleKeyframes';
-                style.textContent = `
-                    @keyframes simpleParticle {
-                        0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-                        100% { opacity: 0; transform: translate(-50%, -150px) scale(0.3); }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
-            
-            container.appendChild(particle);
-            setTimeout(() => particle.remove(), 1000);
-        }
-        
-        function showComboExplosion(comboCount) {
-            comboExplosionEl.textContent = `${comboCount}x COMBO!`;
-            comboExplosionEl.classList.remove('show');
-            comboExplosionEl.offsetHeight; // Force reflow
-            comboExplosionEl.classList.add('show');
-        }
-        
-        function spawnNewPiece() {
-            currentPiece = nextPiece || getRandomPiece();
-            nextPiece = getRandomPiece();
-            
-            if (!canMove(currentPiece, 0, 0)) {
-                gameOver();
-            }
-        }
-        
-        function rotatePiece(piece) {
-            const rotated = piece.shape[0].map((_, i) =>
-                piece.shape.map(row => row[i]).reverse()
-            );
-            return { ...piece, shape: rotated };
-        }
-        
-        function holdPiece() {
-            if (!canHold || !gameRunning || isPaused) return;
-            
-            if (heldPiece) {
-                [currentPiece, heldPiece] = [heldPiece, currentPiece];
-                currentPiece.x = Math.floor((BOARD_WIDTH - currentPiece.shape[0].length) / 2);
-                currentPiece.y = 0;
-            } else {
-                heldPiece = currentPiece;
-                spawnNewPiece();
-            }
-            
-            canHold = false;
-            drawSmallPiece(heldPiece, holdCtx, holdCanvas);
-            render();
-        }
-        
-        function updateDisplay() {
-            // Throttle display updates for performance
-            const now = Date.now();
-            if (now - lastUpdateTime < 100) return;
-            lastUpdateTime = now;
-            
-            // Enhanced score animation
-            const oldScore = parseInt(scoreEl.textContent.replace(/,/g, '')) || 0;
-            const newScore = score;
-            if (newScore > oldScore) {
-                scoreEl.style.transform = 'scale(1.1)';
-                scoreEl.style.textShadow = '0 0 20px var(--primary)';
-                setTimeout(() => {
-                    scoreEl.style.transform = 'scale(1)';
-                    scoreEl.style.textShadow = '0 0 10px var(--primary)';
-                }, 200);
-            }
-            
-            scoreEl.textContent = score.toLocaleString();
-            linesEl.textContent = lines;
-            levelEl.textContent = level;
-            comboEl.textContent = combo;
-            maxComboEl.textContent = maxCombo;
-            piecesEl.textContent = pieces;
-            speedEl.textContent = Math.max(1, 11 - level);
-            bonusEl.textContent = 'x' + bonusMultiplier.toFixed(1);
-            clearTypeEl.textContent = lastClearType;
-            
-            // Update level progress with smooth animation
-            const progress = (lines % 10) / 10 * 100;
-            levelProgressEl.style.width = progress + '%';
-            
-            // Update time
-            const elapsed = Math.floor((Date.now() - startTime) / 1000);
-            const minutes = Math.floor(elapsed / 60);
-            const seconds = elapsed % 60;
-            timeEl.textContent = 
-                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            
-            // Update PPS
-            const pps = elapsed > 0 ? (pieces / elapsed).toFixed(1) : '0.0';
-            ppsEl.textContent = pps;
-        }
-        
-        function render() {
-            drawBoard();
-            drawGhostPiece();
-            drawPiece(currentPiece);
-            drawSmallPiece(nextPiece, nextCtx, nextCanvas);
-        }
-        
-        function gameLoop() {
-            if (!gameRunning || isPaused) return;
-            
-            if (canMove(currentPiece, 0, 1)) {
-                currentPiece.y++;
-            } else {
-                placePiece();
-            }
-            
-            render();
-            updateDisplay();
-        }
-        
-        // Optimized continuous movement with better sensitivity
-        function startContinuousMove() {
-            if (moveInterval) return;
-            
-            moveInterval = setInterval(() => {
-                const now = Date.now();
-                if (now - lastMoveTime < 80) return; // Faster response
-                
-                let moved = false;
-                if (isMovingLeft && canMove(currentPiece, -1, 0)) {
-                    currentPiece.x--;
-                    moved = true;
-                }
-                if (isMovingRight && canMove(currentPiece, 1, 0)) {
-                    currentPiece.x++;
-                    moved = true;
-                }
-                if (isMovingDown && canMove(currentPiece, 0, 1)) {
-                    currentPiece.y++;
-                    moved = true;
-                }
-                
-                if (moved) {
-                    render();
-                    lastMoveTime = now;
-                }
-            }, 45); // Much faster interval for better responsiveness
-        }
-        
-        function stopContinuousMove() {
-            if (moveInterval) {
-                clearInterval(moveInterval);
-                moveInterval = null;
-            }
-            isMovingLeft = false;
-            isMovingRight = false;
-            isMovingDown = false;
-        }
-        
-        // Enhanced touch controls with superior sensitivity
-        canvas.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            const touch = e.touches[0];
-            const rect = canvas.getBoundingClientRect();
-            touchStartX = touch.clientX - rect.left;
-            touchStartY = touch.clientY - rect.top;
-        }, { passive: false });
-        
-        canvas.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            if (!gameRunning || isPaused) return;
-            
-            const touch = e.touches[0];
-            const rect = canvas.getBoundingClientRect();
-            const currentX = touch.clientX - rect.left;
-            const currentY = touch.clientY - rect.top;
-            
-            const deltaX = currentX - touchStartX;
-            const deltaY = currentY - touchStartY;
-            const threshold = 6; // Ultra sensitive - was 10
-            
-            // Reset movement states
-            isMovingLeft = false;
-            isMovingRight = false;
-            isMovingDown = false;
-            
-            // Ultra sensitive movement detection
-            if (Math.abs(deltaX) > threshold) {
-                if (deltaX > 0) {
-                    isMovingRight = true;
-                } else {
-                    isMovingLeft = true;
-                }
-                startContinuousMove();
-            }
-            
-            if (deltaY > threshold) {
-                isMovingDown = true;
-                startContinuousMove();
-            }
-            
-            // Stop movement if back to center area (smaller dead zone)
-            if (Math.abs(deltaX) <= threshold && Math.abs(deltaY) <= threshold) {
-                stopContinuousMove();
-            }
-        }, { passive: false });
-        
-        canvas.addEventListener('touchend', (e) => {
-            e.preventDefault();
-            const touch = e.changedTouches[0];
-            const rect = canvas.getBoundingClientRect();
-            const deltaX = (touch.clientX - rect.left) - touchStartX;
-            const deltaY = (touch.clientY - rect.top) - touchStartY;
-            const threshold = 12; // Smaller threshold for taps
-            
-            stopContinuousMove();
-            
-            // Quick tap = rotate
-            if (Math.abs(deltaX) < threshold && Math.abs(deltaY) < threshold) {
-                rotate();
-            }
-            // Swipe up = hold  
-            else if (deltaY < -threshold && Math.abs(deltaX) < threshold) {
-                holdPiece();
-            }
-            // Fast swipe down = hard drop
-            else if (deltaY > threshold * 2.5) {
-                hardDrop();
-            }
-        }, { passive: false });
-        
-        function gameOver() {
-            gameRunning = false;
-            clearInterval(gameInterval);
-            stopContinuousMove();
-            
-            // Auto-submit score to Telegram
-            if (window.Telegram && window.Telegram.WebApp) {
-                setTimeout(() => {
-                    sendScore();
-                }, 1500);
-            }
-            
-            // Update final stats
-            document.getElementById('finalScore').textContent = score.toLocaleString();
-            document.getElementById('finalLines').textContent = lines;
-            document.getElementById('finalLevel').textContent = level;
-            document.getElementById('finalMaxCombo').textContent = maxCombo;
-            
-            const elapsed = Math.floor((Date.now() - startTime) / 1000);
-            const minutes = Math.floor(elapsed / 60);
-            const seconds = elapsed % 60;
-            document.getElementById('finalTime').textContent = 
-                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            
-            const pps = elapsed > 0 ? (pieces / elapsed).toFixed(1) : '0.0';
-            document.getElementById('finalPPS').textContent = pps;
-            
-            // Show game over modal
-            document.getElementById('gameOverModal').style.display = 'flex';
-        }
-        
-        function startNewGame() {
-            initBoard();
-            score = 0;
-            lines = 0;
-            level = 1;
-            combo = 0;
-            maxCombo = 0;
-            pieces = 0;
-            lastClearType = '-';
-            bonusMultiplier = 1;
-            startTime = Date.now();
-            lastUpdateTime = 0;
-            gameRunning = true;
-            isPaused = false;
-            heldPiece = null;
-            canHold = true;
-            
-            stopContinuousMove();
-            document.getElementById('gameOverModal').style.display = 'none';
-            
-            currentPiece = getRandomPiece();
-            nextPiece = getRandomPiece();
-            
-            clearInterval(gameInterval);
-            gameInterval = setInterval(gameLoop, Math.max(50, 1000 - (level - 1) * 100));
-            
-            holdCtx.clearRect(0, 0, holdCanvas.width, holdCanvas.height);
-            render();
-            updateDisplay();
-        }
-        
-        // Movement functions
-        function rotate() {
-            if (gameRunning && !isPaused) {
-                const rotated = rotatePiece(currentPiece);
-                if (canMove(rotated, 0, 0)) {
-                    currentPiece = rotated;
-                    render();
-                }
-            }
-        }
-        
-        function hardDrop() {
-            if (gameRunning && !isPaused) {
-                while (canMove(currentPiece, 0, 1)) {
-                    currentPiece.y++;
-                }
-                placePiece();
-                render();
-            }
-        }
-        
-        // Optimized keyboard controls
-        document.addEventListener('keydown', (e) => {
-            if (!gameRunning || isPaused) return;
-            
-            switch(e.key) {
-                case 'ArrowLeft': 
-                    e.preventDefault(); 
-                    if (!isMovingLeft) {
-                        isMovingLeft = true;
-                        startContinuousMove();
-                    }
-                    break;
-                case 'ArrowRight': 
-                    e.preventDefault(); 
-                    if (!isMovingRight) {
-                        isMovingRight = true;
-                        startContinuousMove();
-                    }
-                    break;
-                case 'ArrowDown': 
-                    e.preventDefault(); 
-                    if (!isMovingDown) {
-                        isMovingDown = true;
-                        startContinuousMove();
-                    }
-                    break;
-                case 'ArrowUp': e.preventDefault(); rotate(); break;
-                case ' ': e.preventDefault(); hardDrop(); break;
-                case 'c': case 'C': e.preventDefault(); holdPiece(); break;
-                case 'p': case 'P': e.preventDefault(); isPaused = !isPaused; break;
-            }
-        });
-        
-        document.addEventListener('keyup', (e) => {
-            switch(e.key) {
-                case 'ArrowLeft': 
-                    isMovingLeft = false;
-                    if (!isMovingRight && !isMovingDown) stopContinuousMove();
-                    break;
-                case 'ArrowRight': 
-                    isMovingRight = false;
-                    if (!isMovingLeft && !isMovingDown) stopContinuousMove();
-                    break;
-                case 'ArrowDown': 
-                    isMovingDown = false;
-                    if (!isMovingLeft && !isMovingRight) stopContinuousMove();
-                    break;
-            }
-        });
-        
-        function sendScore() {
-            const gameData = {
-                score: score,
-                lines: lines,
-                level: level,
-                time: Math.floor((Date.now() - startTime) / 1000),
-                maxCombo: maxCombo,
-                pieces: pieces
-            };
-            
-            if (window.Telegram && window.Telegram.WebApp) {
-                try {
-                    window.Telegram.WebApp.sendData(JSON.stringify(gameData));
-                    window.Telegram.WebApp.close();
-                } catch (e) {
-                    console.error('Telegram WebApp error:', e);
-                    alert(`Score: ${score.toLocaleString()}\nLines: ${lines}\nLevel: ${level}`);
-                }
-            } else {
-                console.log('Game data:', gameData);
-                alert(`Score: ${score.toLocaleString()}\nLines: ${lines}\nLevel: ${level}`);
-            }
-        }
-        
-        // Enhanced responsive canvas sizing for bigger field
+        const mainHeart = document.getElementById('mainHeart');
+        const explosionEffect = document.getElementById('explosionEffect');
+        const loveCounter = document.getElementById('loveCounter');
+        const sparkleBurst = document.getElementById('sparkleBurst');
+
+        // Setup canvas
         function resizeCanvas() {
-            const container = document.querySelector('.canvas-container');
-            const containerWidth = container.clientWidth - 30;
-            const aspectRatio = 600 / 300; // Updated aspect ratio
-            const maxWidth = Math.min(containerWidth, 350); // Increased max width
-            const newWidth = Math.max(maxWidth, 280); // Minimum width increased
-            const newHeight = newWidth * aspectRatio;
-            
-            canvas.style.width = newWidth + 'px';
-            canvas.style.height = newHeight + 'px';
-            
-            // Ensure canvas is always visible and large enough
-            if (window.innerWidth > 400) {
-                canvas.style.width = Math.min(350, containerWidth) + 'px';
-                canvas.style.height = (Math.min(350, containerWidth) * aspectRatio) + 'px';
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Particle class for text formation
+        class Particle {
+            constructor(x, y, targetX, targetY, color = '#ffd700') {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.targetX = targetX;
+                this.targetY = targetY;
+                this.size = Math.random() * 3 + 1;
+                this.color = color;
+                this.speed = 0.02;
+                this.reached = false;
+                this.life = 1;
+            }
+
+            update() {
+                if (!this.reached) {
+                    this.x += (this.targetX - this.x) * this.speed;
+                    this.y += (this.targetY - this.y) * this.speed;
+                    
+                    if (Math.abs(this.targetX - this.x) < 2 && Math.abs(this.targetY - this.y) < 2) {
+                        this.reached = true;
+                    }
+                } else {
+                    this.life -= 0.005;
+                    this.y += Math.sin(Date.now() * 0.001) * 0.5;
+                    this.x += Math.cos(Date.now() * 0.001) * 0.3;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.life;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.shadowBlur = 20;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.restore();
             }
         }
-        
-        // Initialize
-        window.addEventListener('resize', resizeCanvas);
-        window.addEventListener('orientationchange', () => {
-            setTimeout(resizeCanvas, 100);
+
+        // Create text particles
+        function createTextParticles(text, startX, startY) {
+            const canvas2D = document.createElement('canvas');
+            const ctx2D = canvas2D.getContext('2d');
+            canvas2D.width = 800;
+            canvas2D.height = 200;
+            
+            ctx2D.font = 'bold 120px Great Vibes';
+            ctx2D.fillStyle = 'white';
+            ctx2D.textAlign = 'center';
+            ctx2D.fillText(text, 400, 120);
+            
+            const imageData = ctx2D.getImageData(0, 0, canvas2D.width, canvas2D.height);
+            const data = imageData.data;
+            
+            for (let y = 0; y < canvas2D.height; y += 4) {
+                for (let x = 0; x < canvas2D.width; x += 4) {
+                    const index = (y * canvas2D.width + x) * 4;
+                    if (data[index + 3] > 128) {
+                        const colors = ['#ff0040', '#ff4081', '#ffd700', '#ff6b9d'];
+                        const color = colors[Math.floor(Math.random() * colors.length)];
+                        particles.push(new Particle(
+                            Math.random() * canvas.width,
+                            Math.random() * canvas.height,
+                            startX - 400 + x,
+                            startY - 60 + y,
+                            color
+                        ));
+                    }
+                }
+            }
+        }
+
+        // Create constellation
+        function createConstellation() {
+            const constellation = document.getElementById('constellation');
+            for (let i = 0; i < 80; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = star.style.height = (Math.random() * 4 + 2) + 'px';
+                star.style.animationDelay = Math.random() * 4 + 's';
+                star.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                constellation.appendChild(star);
+            }
+        }
+
+        // Create sparkles
+        function createSparkles() {
+            for (let i = 0; i < 20; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                const angle = (Math.PI * 2 * i) / 20;
+                const radius = 150 + Math.random() * 100;
+                sparkle.style.left = 50 + Math.cos(angle) * radius / 300 * 100 + '%';
+                sparkle.style.top = 50 + Math.sin(angle) * radius / 300 * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 6 + 's';
+                sparkleBurst.appendChild(sparkle);
+            }
+        }
+
+        // Heart explosion effect
+        function createHeartExplosion() {
+            explosionEffect.innerHTML = '';
+            explosionEffect.classList.remove('active');
+            
+            const heartEmojis = ['💖', '💕', '💗', '💓', '💝', '❤️', '💜', '💛'];
+            
+            for (let i = 0; i < 15; i++) {
+                const explosionHeart = document.createElement('div');
+                explosionHeart.className = 'explosion-heart';
+                explosionHeart.innerHTML = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                
+                const angle = (Math.PI * 2 * i) / 15;
+                const distance = 200 + Math.random() * 200;
+                const dx = Math.cos(angle) * distance;
+                const dy = Math.sin(angle) * distance;
+                
+                explosionHeart.style.setProperty('--dx', dx + 'px');
+                explosionHeart.style.setProperty('--dy', dy + 'px');
+                explosionHeart.style.left = '50%';
+                explosionHeart.style.top = '50%';
+                explosionHeart.style.transform = 'translate(-50%, -50%)';
+                
+                explosionEffect.appendChild(explosionHeart);
+            }
+            
+            explosionEffect.classList.add('active');
+        }
+
+        // Animate particles
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles = particles.filter(particle => particle.life > 0);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
+            
+            animationId = requestAnimationFrame(animateParticles);
+        }
+
+        // Heart click handler
+        mainHeart.addEventListener('click', () => {
+            loveCount++;
+            loveCounter.textContent = loveCount;
+            
+            // Create heart explosion
+            createHeartExplosion();
+            
+            // Add extra sparkles
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.style.left = (45 + Math.random() * 10) + '%';
+                    sparkle.style.top = (40 + Math.random() * 20) + '%';
+                    sparkle.style.animationDelay = '0s';
+                    sparkleBurst.appendChild(sparkle);
+                    
+                    setTimeout(() => sparkle.remove(), 6000);
+                }, i * 100);
+            }
+            
+            // Create particle burst
+            const colors = ['#ff0040', '#ff4081', '#ffd700', '#ff6b9d', '#9c27b0'];
+            for (let i = 0; i < 30; i++) {
+                const particle = new Particle(
+                    canvas.width / 2,
+                    canvas.height / 2,
+                    canvas.width / 2 + (Math.random() - 0.5) * 400,
+                    canvas.height / 2 + (Math.random() - 0.5) * 400,
+                    colors[Math.floor(Math.random() * colors.length)]
+                );
+                particle.speed = 0.1;
+                particles.push(particle);
+            }
+            
+            // Vibration
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100, 50, 100]);
+            }
         });
-        
-        // Telegram WebApp initialization
+
+        // Touch events
+        mainHeart.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            mainHeart.click();
+        });
+
+        // Initialize everything
+        function init() {
+            createConstellation();
+            createSparkles();
+            
+            // Start text particle animation after a delay
+            setTimeout(() => {
+                createTextParticles('Love Карина', canvas.width / 2, canvas.height / 4);
+            }, 1000);
+            
+            animateParticles();
+        }
+
+        // Telegram WebApp
         if (window.Telegram && window.Telegram.WebApp) {
             window.Telegram.WebApp.ready();
             window.Telegram.WebApp.expand();
-            console.log('Telegram WebApp initialized');
         }
-        
-        resizeCanvas();
-        startNewGame();
+
+        // Start the magic
+        init();
+
+        // Continuous magic effects
+        setInterval(() => {
+            const colors = ['#ff0040', '#ff4081', '#ffd700', '#ff6b9d'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            for (let i = 0; i < 5; i++) {
+                const particle = new Particle(
+                    Math.random() * canvas.width,
+                    canvas.height + 50,
+                    Math.random() * canvas.width,
+                    Math.random() * canvas.height,
+                    color
+                );
+                particle.speed = 0.01;
+                particles.push(particle);
+            }
+        }, 500);
     </script>
 </body>
 </html>
